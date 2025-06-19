@@ -18,7 +18,12 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(auth -> auth.requestMatchers("/**").hasAnyRole(ROLE_USER))
+    http.authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers("/actuator/health", "/actuator/info")
+                    .permitAll()
+                    .requestMatchers("/**")
+                    .hasAnyRole(ROLE_USER))
         .httpBasic(Customizer.withDefaults());
     return http.build();
   }

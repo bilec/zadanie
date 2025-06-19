@@ -1,5 +1,7 @@
 services:
   biznis-analyst-service:
+    container_name: biznis-analyst-service
+    hostname: biznis-analyst-service
     build:
       context: .
       dockerfile: biznisanalyst/src/main/docker/Dockerfile.native
@@ -8,9 +10,18 @@ services:
     environment:
       - SERVER_PORT=8081
       - DATA_PROVIDER_URL=http://data-provider-service:8082/random-text
+    depends_on:
+      - data-provider-service
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     restart: unless-stopped
 
   data-provider-service:
+    container_name: data-provider-service
+    hostname: data-provider-service
     build:
       context: .
       dockerfile: dataprovider/src/main/docker/Dockerfile.native
@@ -18,4 +29,9 @@ services:
       - "8082:8082"
     environment:
       - SERVER_PORT=8082
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     restart: unless-stopped

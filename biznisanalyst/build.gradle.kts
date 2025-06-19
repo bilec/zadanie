@@ -8,6 +8,7 @@ plugins {
 
 dependencies {
     implementation(libs.guava)
+    implementation(libs.spring.starter.actuator)
     implementation(libs.spring.starter.web)
     implementation(libs.spring.starter.webflux)
     implementation(libs.spring.starter.security)

@@ -9,6 +9,7 @@ plugins {
 dependencies {
   implementation(libs.commons.text)
   implementation(libs.guava)
+  implementation(libs.spring.starter.actuator)
   implementation(libs.spring.starter.web)
   implementation(libs.spring.doc.openapi.ui)
 
