@@ -6,3 +6,9 @@
 docker compose -f docker-compose.yaml up
 docker compose -f docker-compose-native.yaml up
 ```
+
+## BiznisAnalysis credentials
+```
+user
+password
+```
