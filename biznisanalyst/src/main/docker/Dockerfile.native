@@ -1,0 +1,9 @@
+FROM gradle:8.13-jdk17-graal AS builder
+WORKDIR /app
+COPY . .
+RUN gradle clean :biznisanalyst:nativeCompile
+
+FROM debian:12-slim
+WORKDIR /app
+COPY --from=builder /app/biznisanalyst/build/native/nativeCompile/biznisanalyst biznisanalyst
+CMD ["./biznisanalyst"]

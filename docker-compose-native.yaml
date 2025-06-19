@@ -1,0 +1,31 @@
+services:
+  biznis-analyst-service:
+    build:
+      context: .
+      dockerfile: biznisanalyst/src/main/docker/Dockerfile.native
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVER_PORT=8081
+      - DATA_PROVIDER_URL=http://data-provider-service:8082/random-text
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  data-provider-service:
+    build:
+      context: .
+      dockerfile: dataprovider/src/main/docker/Dockerfile.native
+    ports:
+      - "8082:8082"
+    environment:
+      - SERVER_PORT=8082
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped

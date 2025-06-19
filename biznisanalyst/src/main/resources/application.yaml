@@ -1,0 +1,5 @@
+server:
+  port: 8081
+data:
+  provider:
+    url: http://localhost:8082/random-text
