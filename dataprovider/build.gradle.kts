@@ -17,3 +17,12 @@ dependencies {
   testImplementation(libs.mockito.core)
   testImplementation(libs.spring.starter.test)
 }
+
+graalvmNative {
+  binaries {
+    named("main") {
+      buildArgs.add("--no-fallback")
+      buildArgs.add("--report-unsupported-elements-at-runtime")
+    }
+  }
+}
