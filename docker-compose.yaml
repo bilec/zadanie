@@ -11,7 +11,7 @@ services:
       - SERVER_PORT=8081
       - DATA_PROVIDER_URL=http://data-provider-service:8082/random-text
     depends_on:
-          - data-provider-service
+      - data-provider-service
     healthcheck:
       test: ["CMD", "wget", "--spider", "http://localhost:8081/actuator/health"]
       interval: 30s
